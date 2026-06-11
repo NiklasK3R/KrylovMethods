@@ -1,3 +1,15 @@
+"""
+Classic Conjugate Gradient (CG) method for solving linear systems of the form Ax = b, where A is a symmetric positive-definite matrix.
+# Arguments
+# - `A`: Coefficient matrix (symmetric positive-definite)
+# - `b`: Right-hand side vector
+# - `x0`: Initial guess for the solution
+# - `tol`: Tolerance for convergence (default: 1e-6)
+# - `maxiter`: Maximum number of iterations (default: 1000)
+# Returns
+# - `KrylovResult`: A struct containing the solution, residuals, number of iterations, and convergence status.
+"""
+
 function cg(A::AbstractMatrix, b::AbstractVector, x0::AbstractVector; tol::Float64=1e-6, maxiter::Int=1000)
   x = copy(x0)
   r = b - A * x
