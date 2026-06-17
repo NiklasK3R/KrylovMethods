@@ -7,15 +7,13 @@ using KrylovSubspaceMethods
 
     @testset "Simple SPD System (Sanity-Check gegen CG)" begin
         n = 50
-        A = spdiagm(-1 => -ones(n-1),
-                     0 =>  4*ones(n),
-                     1 => -ones(n-1))
+        A = spdiagm(-1 => -ones(n-1), 0 => 4*ones(n), 1 => -ones(n-1))
         x_exact = rand(n)
         b = A * x_exact
         x0 = zeros(n)
 
         result_minres = minres(A, b, x0)
-        result_cg     = cg(A, b, x0)
+        result_cg = cg(A, b, x0)
 
         @test result_minres.converged
         @test norm(result_minres.x - x_exact) < 1e-6
@@ -34,7 +32,7 @@ using KrylovSubspaceMethods
         b = A_sym * x_exact
         x0 = zeros(n)
 
-        result = minres(A_sym, b, x0; maxiter=200)
+        result = minres(A_sym, b, x0; maxiter = 200)
 
         @test result.converged
         @test norm(result.x - x_exact) < 1e-5
@@ -42,9 +40,7 @@ using KrylovSubspaceMethods
 
     @testset "Sparse symmetric System" begin
         n = 100
-        A = spdiagm(-1 => -ones(n-1),
-                     0 =>  4*ones(n),
-                     1 => -ones(n-1))
+        A = spdiagm(-1 => -ones(n-1), 0 => 4*ones(n), 1 => -ones(n-1))
         x_exact = rand(n)
         b = A * x_exact
         x0 = zeros(n)
@@ -57,9 +53,7 @@ using KrylovSubspaceMethods
 
     @testset "History" begin
         n = 50
-        A = spdiagm(-1 => -ones(n-1),
-                     0 =>  4*ones(n),
-                     1 => -ones(n-1))
+        A = spdiagm(-1 => -ones(n-1), 0 => 4*ones(n), 1 => -ones(n-1))
         b = rand(n)
         x0 = zeros(n)
 
@@ -71,13 +65,11 @@ using KrylovSubspaceMethods
 
     @testset "Max Iterations" begin
         n = 1000
-        A = spdiagm(-1 => -ones(n-1),
-                     0 =>  2*ones(n),
-                     1 => -ones(n-1))
+        A = spdiagm(-1 => -ones(n-1), 0 => 2*ones(n), 1 => -ones(n-1))
         b = ones(n)
         x0 = zeros(n)
 
-        result = minres(A, b, x0; maxiter=3)
+        result = minres(A, b, x0; maxiter = 3)
 
         @test !result.converged
         @test result.iterations == 3

@@ -4,11 +4,15 @@ version = "0.1.0"
 authors = ["Niklas Kersten <niklaskersten02@gmail.com>"]
 
 [deps]
+ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MatrixMarket = "4d4711f2-db25-561a-b6b3-d35e7d4047d3"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+ArgParse = "1.2.0"
 LinearAlgebra = "1.12.0"
+MatrixMarket = "0.5.2"
 SparseArrays = "1.12.0"
 Test = "1.11.0"
