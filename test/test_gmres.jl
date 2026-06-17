@@ -6,9 +6,11 @@ using KrylovSubspaceMethods
 @testset "GMRES Tests" begin
 
     @testset "Simple nonsysmmetric system" begin
-        A = [4.0 1.0 0.0;
-             2.0 3.0 1.0;
-             0.0 1.0 2.0]
+        A = [
+            4.0 1.0 0.0;
+            2.0 3.0 1.0;
+            0.0 1.0 2.0
+        ]
         x_exact = [1.0, 2.0, 3.0]
         b = A * x_exact
         x0 = zeros(3)
@@ -21,9 +23,7 @@ using KrylovSubspaceMethods
 
     @testset "Sparse nonsymmetric system" begin
         n = 100
-        A = spdiagm(-1 => -2*ones(n-1),
-                     0  =>  4*ones(n),
-                     1  => -1*ones(n-1))
+        A = spdiagm(-1 => -2*ones(n-1), 0 => 4*ones(n), 1 => -1*ones(n-1))
         x_exact = rand(n)
         b = A * x_exact
         x0 = zeros(n)
@@ -36,9 +36,7 @@ using KrylovSubspaceMethods
 
     @testset "History" begin
         n = 50
-        A = spdiagm(-1 => -2*ones(n-1),
-                     0  =>  4*ones(n),
-                     1  => -1*ones(n-1))
+        A = spdiagm(-1 => -2*ones(n-1), 0 => 4*ones(n), 1 => -1*ones(n-1))
         b = rand(n)
         x0 = zeros(n)
 
@@ -51,14 +49,12 @@ using KrylovSubspaceMethods
 
     @testset "Restart" begin
         n = 200
-        A = spdiagm(-1 => -2*ones(n-1),
-                     0  =>  4*ones(n),
-                     1  => -1*ones(n-1))
+        A = spdiagm(-1 => -2*ones(n-1), 0 => 4*ones(n), 1 => -1*ones(n-1))
         x_exact = rand(n)
         b = A * x_exact
         x0 = zeros(n)
 
-        result = gmres(A, b, x0; restart=10, maxiter=500)
+        result = gmres(A, b, x0; restart = 10, maxiter = 500)
 
         @test result.converged
         @test norm(result.x - x_exact) < 1e-6
@@ -66,13 +62,11 @@ using KrylovSubspaceMethods
 
     @testset "Max iterations" begin
         n = 1000
-        A = spdiagm(-1 => -2*ones(n-1),
-                     0  =>  4*ones(n),
-                     1  => -1*ones(n-1))
+        A = spdiagm(-1 => -2*ones(n-1), 0 => 4*ones(n), 1 => -1*ones(n-1))
         b = ones(n)
         x0 = zeros(n)
 
-        result = gmres(A, b, x0; maxiter=3, restart=20)
+        result = gmres(A, b, x0; maxiter = 3, restart = 20)
 
         @test !result.converged
         @test result.iterations == 3
@@ -80,15 +74,13 @@ using KrylovSubspaceMethods
 
     @testset "Symmetric system (Check against CG)" begin
         n = 50
-        A = spdiagm(-1 => -ones(n-1),
-                     0 =>  4*ones(n),
-                     1 => -ones(n-1))
+        A = spdiagm(-1 => -ones(n-1), 0 => 4*ones(n), 1 => -ones(n-1))
         x_exact = rand(n)
         b = A * x_exact
         x0 = zeros(n)
 
         result_gmres = gmres(A, b, x0)
-        result_cg    = cg(A, b, x0)
+        result_cg = cg(A, b, x0)
 
         @test result_gmres.converged
         @test norm(result_gmres.x - x_exact) < 1e-6

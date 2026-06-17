@@ -7,20 +7,19 @@ KrylovResult
 """
 
 struct KrylovResult
-  x::Vector{Float64}
-  residuals::Vector{Float64}
-  iterations::Int
-  converged::Bool
+    x::Vector{Float64}
+    residuals::Vector{Float64}
+    iterations::Int
+    converged::Bool
 end
 
 """
 Returns the symmetric part of A: H:= 0.5*(A + A'), used by CGW.
 """
 function symmetrize(A::AbstractMatrix)
-  return 0.5 * (A + A')
+    return 0.5 * (A + A')
 end
 
 function converged(r::Vector{Float64}, tol::Float64)
-  return norm(r) < tol
+    return norm(r) < tol
 end
-
